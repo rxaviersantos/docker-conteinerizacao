@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  database:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: database
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=appdb
+      - MYSQL_ROOT_PASSWORD=dbpasswd
+      - MYSQL_USER=dbuser
+    networks:
+      - minharede
+
+networks:
+  minharede:
+    driver: bridge
+
+volumes:
+  - ./mysql:/var/lib/mysql
+env_file:
+  - .env
